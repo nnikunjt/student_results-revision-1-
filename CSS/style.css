@@ -1,0 +1,55 @@
+
+.container{
+      padding-top: 1rem;
+    }
+
+
+.nav label{
+	color: #d3d3d3;
+
+}
+.btn-success{
+	margin-left: 4rem;
+}
+.t-main{
+	margin-top: 2REM;
+	width: 50%;
+
+}
+
+.card{
+	margin-top: .5rem;
+	margin-bottom: .6rem;
+}
+
+.table td{
+	text-align: center;
+}
+.table tr{
+		text-align: center;
+}
+
+
+.footer{
+ 	background-color: #F5FFFA;
+ 	color: #808080;
+   	
+   	position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+ 	padding-top: 2rem;
+
+ }
+ .footer a{
+ 	margin-left: .2rem;
+ 	margin-right: .1rem;
+ }
+.footer span{
+	margin-left: 1rem;
+	padding-right: .2rem;
+
+}
+.footer2{
+	margin-top: 1rem;
+}
