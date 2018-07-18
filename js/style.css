@@ -1,0 +1,91 @@
+@ import url('https://fount.googleapis.com/css?family=Poppins:400,500,700');
+
+html,body{
+	height: 100%;
+	width: 100%;
+	font-family: 'Poppins', sans-serif;
+	color:#222;
+}
+.navbar{
+	padding: .8rem;
+}
+.navbar-nav li{
+  padding-right: 20px ;
+}
+.nav-link{
+	font-size:1.1em !important;
+}
+.carousel-caption h1{
+	font-size:  180%;
+	font-style: italic;
+	text-decoration: none;
+	text-shadow: 1px 1px 20px #000; 
+}
+
+.btn-primary{
+	background-color: #6648b1;
+	font-size: 20% 
+	border: 1px solid #563d7c;
+}
+.btn-primary:hover{
+	background-color: #563d7c;
+	border: 1px solid #563d7c;
+}
+.jumbotron{
+	padding: 1rem;
+	border-radius: 0;
+}
+
+.padding{
+	padding-bottom: 2rem;
+}
+.welcome{
+	width: 75%
+	padding-top: 2rem;
+}
+.welcome hr{
+	border-top: 2px solid #b4b4b4;
+	width: 75%;
+	margin-top: .3rem;
+	margin-bottom: 1rem; 
+}
+.welcome img{
+	border-image: 1rem;
+	margin-top: 5rem;
+
+}
+.social a{
+	font-size: 3rem;
+	padding: 1rem
+}
+.fa:hover {
+    opacity: 0.5;
+     }
+.fa-facebook {
+  color: #3b5998;
+  background: white;
+}
+.fa-instagram {
+  color: #125688;
+ }
+
+.fa-twitter {
+  color: #55ACEE;
+ }
+.fa-youtube {
+  color: #bb0000;
+}
+
+.fa-google-plus {
+  color: #dd4b39;
+ }
+
+ footer{
+ 	background-color: #3f3f3f;
+ 	color: #d5d5d4;
+ 	padding-top: 2rem;
+ }
+ hr.light{
+ 	border-top: 1px solid #d5d5d5;
+ 	width: 75%
+ }
