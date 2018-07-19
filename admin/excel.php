@@ -1,51 +1,38 @@
 <?php 
 	require_once("../database/connection.php");
 
-	$output = '';
 
 	if(isset($_GET['xls'])){
 		$excel = $_GET['xls'];
 		$select_query = "SELECT * FROM `$excel` ";
 		$select_run = mysqli_query($conn,$select_query);
 
-		$output .= '
-			<table class="table" border="1">
-				<tr>
-					<th>roll_no</th>
-					<th>student_name</th>
-					<th>std</th>
-					<th>medium</th>
-					<th>birthdate</th>
-					<th>school</th>
-					<th>father_name</th>
-					<th>father_no</th>
-					<th>mother_name</th>
-					<th>mother_no</th>
-					<th>address</th>
-				</tr>';
+		if ($select_run->num_rows>0) {
+			$delimiter = ",";
+			$filename = $excel."csv";
+
+			$f =fopen('php://memory', 'w');
+
+			$fields = array('roll_no','student_name','std','medium','birthdate','school','father_name','father_no','mother_name','mother_no','address');
+			fputcsv($f, $fields,$delimiter);
+
+
 			while ($res = mysqli_fetch_array($select_run)){
-				$output .='
-					<tr>
-						<td>'.$res['roll_no'].'</td>
-						<td>'.$res['student_name'].'</td>
-						<td>'.$res['std'].'</td>
-						<td>'.$res['medium'].'</td>
-						<td>'.$res['birthdate'].'</td>
-						<td>'.$res['school'].'</td>
-						<td>'.$res['father_name'].'</td>
-						<td>'.$res['father_no'].'</td>
-						<td>'.$res['mother_name'].'</td>
-						<td>'.$res['mother_no'].'</td>
-						<td>'.$res['address'].'</td>
-					</tr>';
+				
+				$linedata = array($res['roll_no'],$res['student_name'],$res['std'],$res['medium'],$res['birthdate'],$res['school'],$res['father_name'],$res['father_no'],$res['mother_name'],$res['mother_no'],$res['address']);
+				fputcsv($f, $linedata, $delimiter);
 			}
-			$output .= '</table>';
+			fseek($f, 0);
 
-			header("Content-Type: application/xls");
-			header("Content-Disposition:attachment; filename='$excel.xls'");
-			echo $output;
 
-			//header('location:settings.php');
+			header("Content-Type: text/csv");
+			header("Content-Disposition:attachment; filename='$excel.csv'");
+
+			fpassthru($f);
+		}
+		exit;
+
+
 
 	}
 

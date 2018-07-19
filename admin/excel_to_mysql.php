@@ -1,39 +1,51 @@
 <?php
 
-	require '../PHPExcel/IOFactory.php'; 
+	//require '../PHPExcel/IOFactory.php'; 
 	require_once('../database/connection.php');
 
-	if (isset($_POST['upload'])) {
-		$inputfilename =$_FILES['file']['tmp_name'];
-	$exceldata=array();
+	if (isset($_POST["upload"])) {
+		$file = $_FILES["file"]["tmp_name"];
+		$file_open = fopen($file,"r");
 
-	try {
-		$inputfiletype =PHPExcel_IOFactory::identify($inputfilename);
-		$objReader = PHPExcel_IOFactory::createReader($inputfilename);
-		$objPHPExcel =$objReader->load($inputfilename);
+		if ($file_open) {
+			while(($csv = fgetcsv($file_open, 1000, ",")) !== false){
 
-	} catch (Exception $e) {
-		dia('Error loading file"'.pathinfo($inputfilename,PATHINFO_BASENAME).'":'.$e->getMessage());
+			
+  			$roll_no = $csv[0];
+  			$name = $csv[1];
+			$std = $csv[2];
+			$medium = $csv[3];
+			$birthdate = $csv[4];
+			$school = $csv[5];
+			$f_name = $csv[6];
+			$father_no = $csv[7];
+			$m_name = $csv[8];
+			$mother_no = $csv[9];
+			$address = $csv[10];
+						
 
-	}
-	$sheet = $objPHPExcel->getSheet(0);
-	$highestRow =$sheet->getHighestRow();
-	$highestColumn =$sheet->getHighestColumn();
 
-	for ($row=1; $row <=$highestRow ; $row++) { 
-		$rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+		  
 
-		$insert_query ="INSERT INTO students(roll_no,student_name,std,medium,birthdate,school,father_name,father_no,mother_name,mother_no,address
-		) VALUES('".$rowData[0][0]."','".$rowData[0][1]."','".$rowData[0][2]."','".$rowData[0][3]."','".$rowData[0][4]."','".$rowData[0][5]."','".$rowData[0][6]."','".$rowData[0][7]."','".$rowData[0][8]."','".$rowData[0][9]."','".$rowData[0][10]."')";
 
-		if (mysqli_query($conn,$insert_query)) {
-			$exceldata[]=$rowData[0];
+		   $insert_query ="INSERT INTO students(roll_no,student_name,std,medium,birthdate,school,father_name,father_no,mother_name,mother_no,address
+		) VALUES('$roll_no','$name','$std','$medium','$birthdate','$school','$f_name','$father_no','$m_name','$mother_no','$address')";
+
+		if ($conn->query($insert_query) === TRUE) {
+			echo "done";
 		}
 		else{
-			echo "Error";
+			echo "string";
 		}
-	}
 
+		}
+
+
+ 		
+ 		}
+ 		else{
+ 			echo "unable to open";
+ 		}
 	}
 
 
