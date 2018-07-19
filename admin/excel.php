@@ -41,39 +41,35 @@
 		$select_query = "SELECT * FROM `$excel` ";
 		$select_run = mysqli_query($conn,$select_query);
 
-		$output .= '
-			<table class="table" border="1">
-				<tr>
-					<th>id</th>
-					<th>roll_no</th>
-					<th>test_date</th>
-					<th>math_total</th>
-					<th>math_obtain</th>
-					<th>sci_total</th>
-					<th>sci_obtain</th>
-					<th>sst_total</th>
-					<th>sst_obtain</th>
-				</tr>';
+		if ($select_run->num_rows>0) {
+			$delimiter = ",";
+			$filename = $excel."csv";
+
+			$f =fopen('php://memory', 'w');
+
+
+			$fields = array('roll_no','test_date','math_total','math_obtain','sci_total','sci_obtain','sst_total','sst_obtain','percentage');
+			fputcsv($f, $fields,$delimiter);
+
 
 			while ($res = mysqli_fetch_array($select_run)) {
-				$output .= '<tr>
-								<td>'.$res['id'].'</td>
-								<td>'.$res['roll_no'].'</td>
-								<td>'.$res['test_date'].'</td>
-								<td>'.$res['math_total'].'</td>
-								<td>'.$res['math_obtain'].'</td>
-								<td>'.$res['sci_total'].'</td>
-								<td>'.$res['sci_obtain'].'</td>
-								<td>'.$res['sst_total'].'</td>
-								<td>'.$res['sst_obtain'].'</td>';
+				$linedata = array($res['roll_no'],$res['test_date'],$res['math_total'],$res['math_obtain'],$res['sci_total'],$res['sci_obtain'],$res['sst_total'],$res['sst_obtain'],$res['percentage']);
+				fputcsv($f, $linedata, $delimiter);
 			}
-			$output .='</table>';
+			fseek($f, 0);
+
 			
-			header("Content-Type: application/xls");
-			header("Content-Disposition:attachment; filename='$excel.xls'");
-			echo $output;
+			
+			header("Content-Type: text/csv");
+			header("Content-Disposition:attachment; filename='$excel.csv'");
+			fpassthru($f);
+			
 
 			//header('location:settings.php');
 	}
+			
+		}
+
+			
 
 ?>
